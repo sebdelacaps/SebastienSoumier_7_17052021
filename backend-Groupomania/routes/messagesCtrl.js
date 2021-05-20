@@ -71,11 +71,11 @@ listMessages: function(req, res) {
       }]
     }).then((messages) => {
       if (messages) {
-        res.status(200).json(messages);
+        res.status(200).json({ messages });
       } else {
         res.status(404).json({ "error": "no messages found" });
       }
-    }).catch(function(err) {
+    }).catch((err) => {
       console.log(err);
       res.status(500).json({ "error": "invalid fields" });
     });
