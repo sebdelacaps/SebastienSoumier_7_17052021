@@ -1,5 +1,6 @@
 // Imports
 const models = require('../models');
+const message = require('../models/message');
 const jwtUtils = require('../utils/jwt.utils');
 
 // Constants
@@ -23,30 +24,32 @@ likePost: (req, res) => {
     }
 
     models.Message.findOne({
-        attributes: ['email'],
-        where: { id: messageId}
+        where: { id: messageId }
     })
     .then((messageFound) => {
         if (messageFound) {
-            models.user.findOne({
+            models.User.findOne({
                 where: { id: userId }
             })
             .then((userFound) => {
                 if (userFound) {
-                    models.Like.findOne({
+                  
+                   models.Like.findOne({
                         where: {
                             userId: userId,
                             messageId: messageId
                         }
-                    })
+                      
+                    }) 
                     .then((userAlreadyLikedFound) => {
                         if (!userAlreadyLikedFound) {
-                            messageFound.addUser(userFound, { isLike: LIKED})
+                            
+                            messageFound.addUser(userFound, { isLike: LIKED })
                             .then((messageFound) => {
                                 messageFound.update({
                                     likes: messageFound.likes + 1,
                                 })
-                                .then(() => res.status(201).json({ messageFound }))
+                                .then((messageUpdated) => res.status(201).json({ messageUpdated }))
                                 .catch((err) => res.status(500).json({ 'error': 'cannot update message like counter' }))
                             })
                             .catch((err) => {
@@ -57,7 +60,7 @@ likePost: (req, res) => {
                                 userAlreadyLikedFound.update({
                                     isLike: LIKED,
                                 })
-                                .then((messageLike) => res.status(201).json({ messageFound }))
+                                .then((messageLiked) => res.status(201).json({ messageLiked }))
                                 .catch((err) => res.status(500).json({ 'error': 'cannot update user reaction' }))
                             }
                             else {
