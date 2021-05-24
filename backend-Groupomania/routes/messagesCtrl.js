@@ -50,7 +50,7 @@ module.exports = {
             res.status(500).json({'error': 'unable to verify user'})
         })
 },
-listMessages: function(req, res) {
+listMessages: (req, res) => {
     var fields  = req.query.fields;
     var limit   = parseInt(req.query.limit);
     var offset  = parseInt(req.query.offset);
