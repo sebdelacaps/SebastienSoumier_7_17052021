@@ -18,21 +18,21 @@ module.exports = {
         const password = req.body.password;
 
         if (email == null || username == null || password == null ) {
-            return res.status(400).json({'error' : 'missing parameters'})
+            return res.status(400).json({ message : 'missing parameters'})
         }
 
         // Validation controls
         if (username.length >= 13 || username.length <=4) {
-            return res.status(400).json({'error' : 'wrong username (must be length 5 - 12)'})
+            return res.status(400).json({ message : 'wrong username (must be length 5 - 12)'})
         }
 
         // Regex
         if (!EMAIL_REGEX.test(email)) {
-            return res.status(400).json({'error' : 'email is not valid'})
+            return res.status(400).json({ message : 'email is not valid'})
         }
 
         if (!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({'error' : 'password invalid (more than 8 chars & at least one number & at least one special character'})
+            return res.status(400).json({ message : 'password invalid (more than 8 chars & at least one number & at least one special character'})
         }
 
 
@@ -52,27 +52,29 @@ module.exports = {
                       isAdmin: 0,
                     })
                     newUser
-                    .then((newUser) => res.status(201).json({ 'userId': newUser.id }))
+                    .then((newUser) => res.status(201).json({ message: "User was registered successfully!"  }))
                     .catch((error) => res.status(400).json({ error }));
                 })
-                .catch(() => res.status(500).json({ 'error': 'cannot add user' }));
+                .catch(() => res.status(500).json({ message: 'cannot add user' }));
                 
             } else {
-                return res.status(409).json({'error' : 'user already exist'})
+                return res.status(409).json({message : 'user already exist'})
             }    
           })
         .catch(()=> {
             return res.status(500).json({ 'error': 'unable to verify user'})
         })
             },
+
+
     login: (req, res) => {
 
         // Params
         const email = req.body.email;
+        
         const password = req.body.password;
-
         if (email == null ||  password == null ) {
-            return res.status(400).json({'error' : 'missing parameters'})
+            return res.status(400).json({message : 'missing parameters'})
         }
 
  // TODO REGEX validation
@@ -88,7 +90,7 @@ module.exports = {
         .compare(req.body.password, userFound.password)
         .then((valid) => {
           if (!valid) {
-            return res.status(403).json({ 'error': 'Mot de passe incorrect' });
+            return res.status(403).json({ message : 'Invalid Password!' });
           }
           res.status(200).json({
             userId: userFound.id,
@@ -98,11 +100,11 @@ module.exports = {
         .catch((error) => res.status(500).json({ error }));
         
     } else {
-        return res.status(404).json({'error' : 'user not exist in DB'})
+        return res.status(404).json({ message : 'user not exist in DB'})
     }    
   })
 .catch(()=> {
-    return res.status(500).json({ 'error': 'unable to verify user'})
+    return res.status(500).json({ message : 'unable to verify user'})
 })
     },
 
