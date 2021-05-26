@@ -67,11 +67,11 @@ listMessages: (req, res) => {
       offset: (!isNaN(offset)) ? offset : null,
       include: [{
         model: models.User,
-        attributes: [ 'username' ]
+        attributes: [ "username" ]
       }]
     }).then((messages) => {
       if (messages) {
-        res.status(200).json({ messages });
+        res.status(200).json( messages );
       } else {
         res.status(404).json({ "error": "no messages found" });
       }
