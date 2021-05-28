@@ -1,8 +1,9 @@
 <template>
   <div>
-  <div :key="post.id_post" v-for="post in posts">
 
-      <Post :post="post"/>
+   <div :key="post.id_post" v-for="post in postsContent"> 
+
+        <Post :post="post"/>  
   </div>
 
 </div>
@@ -14,7 +15,7 @@ import Post from './Post'
 export default {
 name: 'Posts',
 props: {
-    posts: Array,
+    postsContent: Array,
 },
 components: {
   Post

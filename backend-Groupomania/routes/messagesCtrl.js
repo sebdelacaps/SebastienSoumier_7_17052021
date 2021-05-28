@@ -39,15 +39,15 @@ module.exports = {
                     UserId : userFound.id
                 })
                 .then((newMessage) => {
-                    res.status(201).json({newMessage})
+                    return res.status(201).json(newMessage)
                 })
                 .catch(() => res.status(500).json({'error': 'cannot post message'}))
             } else {
-                res.status(404).json({'error': 'user not found'})
+               return res.status(404).json({'error': 'user not found'})
             }
         })
         .catch((err) => {
-            res.status(500).json({'error': 'unable to verify user'})
+            return res.status(500).json({'error': 'unable to verify user'})
         })
 },
 listMessages: (req, res) => {
@@ -67,17 +67,18 @@ listMessages: (req, res) => {
       offset: (!isNaN(offset)) ? offset : null,
       include: [{
         model: models.User,
-        attributes: [ "username" ]
-      }]
+        attributes: [ 'username' ]
+      },
+    ]
     }).then((messages) => {
       if (messages) {
-        res.status(200).json( messages );
+        return res.status(200).json( messages );
       } else {
-        res.status(404).json({ "error": "no messages found" });
+        return res.status(404).json({ "error": "no messages found" });
       }
     }).catch((err) => {
       console.log(err);
-      res.status(500).json({ "error": "invalid fields" });
+      return res.status(500).json({ "error": "invalid fields" });
     });
   }
 

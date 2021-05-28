@@ -1,10 +1,9 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <!-- <h3>{{ content }}</h3> -->
     </header>
     <Header @add-post="addPost"/>
-    <Posts :posts="posts"/>
+    <Posts :posts-content="posts"/>
    
 </div>
 
@@ -34,10 +33,12 @@ this.posts =[...this.posts, post]
     };
   
   },
-  mounted() {
+  created() {
     UserService.getPublicContent().then(
       (response) => {
-        this.posts = response.data.messages;
+        this.posts = response.data
+        console.log(response.data)
+       
       },
       (error) => {
         this.content =
