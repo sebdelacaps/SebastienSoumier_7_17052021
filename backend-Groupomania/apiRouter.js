@@ -4,6 +4,7 @@ const usersCtrl = require('./routes/usersCtrl')
 const messagesCtrl = require('./routes/messagesCtrl')
 const likesCtrl = require('./routes/likesCtrl')
 
+
 // Router
 exports.router = (() => {
     const apiRouter = express.Router();
@@ -18,6 +19,7 @@ apiRouter.route('/users/me/').put(usersCtrl.updateUserProfile);
 // Messages routes
 apiRouter.route('/messages/new/').post(messagesCtrl.createMessage);
 apiRouter.route('/messages/').get(messagesCtrl.listMessages);
+apiRouter.route('/messages/:messageId').delete(messagesCtrl.deleteMessage);
 
 // Likes routes
 apiRouter.route('/messages/:messageId/vote/like').post(likesCtrl.likePost);

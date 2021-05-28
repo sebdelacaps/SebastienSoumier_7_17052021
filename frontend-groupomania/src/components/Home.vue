@@ -3,7 +3,7 @@
     <header class="jumbotron">
     </header>
     <Header @add-post="addPost"/>
-    <Posts :posts-content="posts"/>
+    <Posts @delete-post="deletePost" :posts-content="posts"/>
    
 </div>
 
@@ -25,13 +25,17 @@ export default {
   methods: {
     addPost(post) {
 this.posts =[...this.posts, post]
-    }
+    },
+    deletePost(id) {
+  console.log('post', id)
   },
   data() {
     return {
       posts: []
     };
   
+  },
+
   },
   created() {
     UserService.getPublicContent().then(

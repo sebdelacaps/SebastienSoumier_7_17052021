@@ -9,7 +9,7 @@
                     <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle">
                         <div class="d-flex flex-column ml-2"> <span class="font-weight-bold">{{post.User.username}}</span> </div>
                     </div>
-                    <div class="d-flex flex-row mt-1 ellipsis"> <small class="mr-2"> {{ duration }}</small> <font-awesome-icon :icon="['fas', 'ellipsis-h']" />  </div>
+                    <div @click="onDelete(post.id)" class="d-flex flex-row mt-1 ellipsis">  <font-awesome-icon :icon="['fas', 'times']" />  </div>
                 </div> <img src="https://i.imgur.com/xhzhaGA.jpg" class="img-fluid">
                 <div class="p-2">
                     <p class="text-justify">{{ post.content}}</p>
@@ -39,6 +39,11 @@ computed : {
     duration () {
         
         return this.post.createdAt
+    }
+},
+methods : {
+    onDelete(id) {
+        this.$emit('delete-post', id)
     }
 }
 }
