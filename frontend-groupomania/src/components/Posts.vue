@@ -20,7 +20,6 @@ props: {
 components: {
   Post
 },
-emits: ['delete-post'],
 }
 </script>
 

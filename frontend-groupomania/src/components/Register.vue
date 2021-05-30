@@ -96,6 +96,7 @@ export default {
   },
   methods: {
     handleRegister(user) {
+      
       this.message = "";
       this.successful = false;
       this.loading = true;

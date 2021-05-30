@@ -112,8 +112,13 @@ listMessages: (req, res) => {
                .then(() => res.status(200).json({ message: "Message Deleted!" }))
                .catch((error) => res.status(400).json({ error }));
   }
-  else 
-  res.status(403).json({ 'error': 'you have to be admin'})
+  else {
+    res.status(202).json({ 'error': 'you have to be admin'})
+  }
+  
+})
+.catch((err) => {
+  return res.status(500).json({ 'error': 'unable to verify user' })
 })
 
 } else {

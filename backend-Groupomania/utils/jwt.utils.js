@@ -16,12 +16,14 @@ JWT_SIGN_SECRET,
 },
 
 parseAuthorization: (authorization) => {
-   
+    console.log(authorization)
     return (authorization != null) ? authorization.replace('Bearer ', '') : null;
+   
 },
 getUserId: (authorization) => {
     var userId = -1;
     const token = module.exports.parseAuthorization(authorization);
+    console.log(token)
     
     if (token != null) {
         try {
