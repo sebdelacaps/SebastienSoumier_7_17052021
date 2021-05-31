@@ -1,9 +1,8 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
-    </header>
+    <header class="jumbotron">WELCOME</header>
     <Header @add-post="addPost"/>
-    <Posts @delete-post="deletePost" :posts-content="posts"/>
+    <Posts @delete-post="deletePost" @like-post="likePost" :posts-content="posts"/>
    
 </div>
 
@@ -23,9 +22,33 @@ export default {
     Posts
   },
   methods: {
-    addPost(post) {
-this.posts =[...this.posts, post]
-    },
+    addPost(postAdded) {
+    
+   axios({
+      method: 'post',
+      url: "http://localhost:3000/api/messages/new",
+      headers: { Authorization: this.$store.state.auth.user.token },
+      data: {
+    "content": postAdded
+  }})
+  .then(() => {
+
+UserService.getPublicContent().then(
+      (response) => {
+        this.posts = response.data
+        console.log(this.posts)
+       
+      },
+      (error) => {
+        this.content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    )})}
+    ,
   deletePost(id) {
   if (confirm('Are you sure?')) {
   
@@ -54,20 +77,47 @@ return alert('Error deleting task')
 
         
      
-  }
-     
+  },
+
+  likePost(id) {
+    console.log(this.$store.state.auth.user.token)
+  axios({
+     method: 'post',
+      url: `http://localhost:3000/api/messages/${id}/vote/like`,
+      headers: { Authorization: this.$store.state.auth.user.token },
+      
+  }).then(() => {
+
+UserService.getPublicContent().then(
+      (response) => {
+        this.posts = response.data
+        console.log(this.posts)
+       
+      },
+      (error) => {
+        this.content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    )})} 
+  
   },
   data() {
     return {
       posts: []
+      
     };
   
   },
   created() {
+
     UserService.getPublicContent().then(
       (response) => {
         this.posts = response.data
-        
+        console.log(this.posts)
        
       },
       (error) => {

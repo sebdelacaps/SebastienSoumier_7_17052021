@@ -1,9 +1,9 @@
-<template>
+<template >
   <div>
 
    <div :key="post.id" v-for="post in postsContent"> 
 
-        <Post @delete-post="$emit('delete-post', post.id)" :post="post"/>  
+        <Post @delete-post="$emit('delete-post', post.id)" @like-post="$emit('like-post', post.id)" :post="post"/>  
   </div>
 
 </div>
@@ -20,6 +20,7 @@ props: {
 components: {
   Post
 },
+emits: ["delete-post", "like-post"],
 }
 </script>
 

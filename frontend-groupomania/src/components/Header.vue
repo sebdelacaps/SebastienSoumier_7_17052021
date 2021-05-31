@@ -43,7 +43,7 @@
               class="form-control"
               id="message"
               rows="3"
-              :placeholder="currentUser.username"
+              placeholder="Publier un post"
             ></textarea>
            
           </div>
@@ -98,10 +98,7 @@ export default {
     }
   },
   computed: {
-    currentUser() {
-      return `Que voulez-vous poster ${this.$store.state.auth.user} ?`;
-     
-    }
+   
   },
   methods: {
     addPost(e) {
@@ -112,14 +109,15 @@ export default {
       }
       
       const newPost = {
-        id_post: "8",
-       id_user: this.$store.state.auth.user.id,
-        comment : this.comment
+      content: this.comment
+    
 
       }
-      this.comment =''
-     
+      
+          
       this.$emit('add-post', newPost)
+
+      this.comment =''
     }
   }
 };

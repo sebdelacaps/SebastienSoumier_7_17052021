@@ -8,7 +8,7 @@
             <font-awesome-icon icon="home" /> Home
           </router-link>
         </li>
-        <li v-if="showAdminBoard" class="nav-item">
+        <!-- <li v-if="showAdminBoard" class="nav-item">
           <router-link to="/admin" class="nav-link">Admin Board</router-link>
         </li>
         <li v-if="showModeratorBoard" class="nav-item">
@@ -16,7 +16,7 @@
         </li>
         <li class="nav-item">
           <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
-        </li>
+        </li> -->
       </div>
 
       <div v-if="!currentUser" class="navbar-nav ml-auto">
@@ -51,6 +51,7 @@
       <router-view />
     </div>
   </div>
+  
 </template>
 
 <script>

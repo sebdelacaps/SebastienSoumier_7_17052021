@@ -3,7 +3,7 @@ const models = require('../models');
 const jwtUtils = require('../utils/jwt.utils')
 
 // Constants
-const TITLE_LIMIT = 2;
+// const TITLE_LIMIT = 2;
 const CONTENT_LIMIT = 4;
 const ITEMS_LIMIT   = 50;
 
@@ -14,18 +14,22 @@ module.exports = {
         // Getting auth header
         const headerAuth = req.headers['authorization']
         const userId = jwtUtils.getUserId(headerAuth);
+        
 
         // Params
-        const title = req.body.title;
-        const content = req.body.content;
+        // const title = req.body.title;
+        const content = req.body.content.content;
+        console.log(content)
 
-        if (title == null || content == null) {
+        // if (title == null || content == null) {
+          if (content == null) {
+            console.log(content)
             return res.status(400).json({'error' : 'missing parameters'})
         }
 
-        if (title.length <= TITLE_LIMIT || content.length <= CONTENT_LIMIT) {
-            return res.status(400).json({'error': 'invalid parameters'})
-        }
+        // if (title.length <= TITLE_LIMIT || content.length <= CONTENT_LIMIT) {
+        //     return res.status(400).json({'error': 'invalid parameters'})
+        // }
 
         models.User.findOne({
             where: { id: userId }
@@ -33,7 +37,7 @@ module.exports = {
         .then((userFound) => {
             if (userFound) {
                 models.Message.create({
-                    title : title,
+                    // title : title,
                     content: content,
                     likes : 0,
                     UserId : userFound.id
@@ -61,7 +65,7 @@ listMessages: (req, res) => {
     }
 
     models.Message.findAll({
-      order: [(order != null) ? order.split(':') : ['title', 'ASC']],
+      order: [(order != null) ? order.split(':') : ['createdAt', 'DESC']],
       attributes: (fields !== '*' && fields != null) ? fields.split(',') : null,
       limit: (!isNaN(limit)) ? limit : null,
       offset: (!isNaN(offset)) ? offset : null,
