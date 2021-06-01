@@ -11,19 +11,25 @@ const ITEMS_LIMIT   = 50;
 module.exports = {
     createMessage : (req, res) => {
 
+      
+
+
+
         // Getting auth header
         const headerAuth = req.headers['authorization']
         const userId = jwtUtils.getUserId(headerAuth);
         
 
+
         // Params
         // const title = req.body.title;
-        const content = req.body.content.content;
-        console.log(content)
-
+      
+        const content = req.body.content
+        const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+       
         // if (title == null || content == null) {
           if (content == null) {
-            console.log(content)
+           
             return res.status(400).json({'error' : 'missing parameters'})
         }
 
@@ -36,11 +42,13 @@ module.exports = {
         })
         .then((userFound) => {
             if (userFound) {
-                models.Message.create({
+
+              models.Message.create({
                     // title : title,
                     content: content,
                     likes : 0,
-                    UserId : userFound.id
+                    UserId : userFound.id,
+                    attachment: image_url
                 })
                 .then((newMessage) => {
                     return res.status(201).json(newMessage)

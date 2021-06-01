@@ -3,7 +3,7 @@ const express = require('express');
 const usersCtrl = require('./routes/usersCtrl')
 const messagesCtrl = require('./routes/messagesCtrl')
 const likesCtrl = require('./routes/likesCtrl')
-
+const multer = require('./utils/multer-config')
 
 // Router
 exports.router = (() => {
@@ -15,9 +15,10 @@ apiRouter.route('/users/register/').post(usersCtrl.register);
 apiRouter.route('/users/login/').post(usersCtrl.login);
 apiRouter.route('/users/me/').get(usersCtrl.getUserProfile);
 apiRouter.route('/users/me/').put(usersCtrl.updateUserProfile);
+apiRouter.route('/users/me/').delete(usersCtrl.deleteUserProfile);
 
 // Messages routes
-apiRouter.route('/messages/new/').post(messagesCtrl.createMessage);
+apiRouter.route('/messages/new/').post(multer, messagesCtrl.createMessage);
 apiRouter.route('/messages/').get(messagesCtrl.listMessages);
 apiRouter.route('/messages/:messageId').delete(messagesCtrl.deleteMessage);
 

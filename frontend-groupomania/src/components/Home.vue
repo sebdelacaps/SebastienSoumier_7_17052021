@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <header class="jumbotron">WELCOME</header>
-    <Header @add-post="addPost"/>
-    <Posts @delete-post="deletePost" @like-post="likePost" :posts-content="posts"/>
+    <Header @add-post="addPost" @add-file="addFile"/>
+    <Posts @delete-post="deletePost" @like-post="likePost" @select-post="selectPost" :posts-content="posts"/>
    
 </div>
 
@@ -22,15 +22,27 @@ export default {
     Posts
   },
   methods: {
-    addPost(postAdded) {
+    addFile(fileAdded){
+      this.posts.attachment = fileAdded
     
-   axios({
-      method: 'post',
-      url: "http://localhost:3000/api/messages/new",
-      headers: { Authorization: this.$store.state.auth.user.token },
-      data: {
-    "content": postAdded
-  }})
+    },
+    addPost(postAdded) {
+
+
+// console.log(this.posts.attachment)
+
+    const fd = new FormData();
+    fd.append('image', this.posts.attachment, this.posts.attachment.name);
+     fd.append('content', postAdded.content);
+    // console.log(Array.from(fd))
+
+   axios ({
+     method: "post",
+     url : 'http://localhost:3000/api/messages/new',
+     data : fd,
+    headers: { Authorization: this.$store.state.auth.user.token,
+    'Content-Type': 'multipart/form-data'}, 
+     })
   .then(() => {
 
 UserService.getPublicContent().then(
@@ -102,7 +114,11 @@ UserService.getPublicContent().then(
           error.message ||
           error.toString();
       }
-    )})} 
+    )})},
+    selectPost (id) {
+     
+     this.posts = this.posts.filter((post) => post.UserId == id)
+    }
   
   },
   data() {

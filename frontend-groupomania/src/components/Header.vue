@@ -56,7 +56,7 @@
         >
           <div class="form-group">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile" />
+              <input @change="onFileSelected" type="file"  class="custom-file-input" id="customFile" />
               <label class="custom-file-label" for="customFile"
                 >Chercher une image/gif</label
               >
@@ -94,6 +94,7 @@ export default {
     return {
     
       comment:'',
+      selectedFile: null
 
     }
   },
@@ -118,8 +119,16 @@ export default {
       this.$emit('add-post', newPost)
 
       this.comment =''
-    }
+    },
+    onFileSelected(event) {
+    event.preventDefault()
+    this.selectedFile = event.target.files[0]
+ 
+
+     this.$emit('add-file', this.selectedFile)
   }
+  },
+  
 };
 </script>
 

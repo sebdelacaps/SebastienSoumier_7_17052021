@@ -1,12 +1,16 @@
 // Imports
 const express = require('express');
 const apiRouter = require('./apiRouter').router;
+const path = require('path');
 
 // Instantiate server
 const server = express()
 
 // Body Parser configuration
 server.use(express.json());
+
+// Dipslya images folder
+server.use('/images', express.static(path.join(__dirname, 'images')));
 
 // CORS
 server.use((req, res, next) => {

@@ -33,6 +33,12 @@
                                 <input @click="onUpdate" class="btn btn-primary" type="submit" value="Update Profile">
                             </div>
                         </div>
+                          <hr>
+                        <div class="form-group">
+                            <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">
+                                <input @click="onDelete" class="btn btn-danger" type="submit" value="Delete Profile">
+                            </div>
+                        </div>
                     </form>
                 </div>
   </div>
@@ -64,7 +70,8 @@ export default {
   methods : {
   onUpdate(e) {
 
-    e.preventDefault()
+  e.preventDefault()
+
 
      axios({
       method: 'put',
@@ -81,10 +88,26 @@ export default {
       this.email = response.data.userUpdated.email
     })
     .catch((err) => console.log(err))
-  }
+  },
+onDelete(e) {
+if (confirm('Are you sure you want to delete your profile ?')) {
+    e.preventDefault()
+
+     axios({
+      method: 'delete',
+      url: "http://localhost:3000/api/users/me",
+      headers: { Authorization: this.$store.state.auth.user.token },
+     })
+   .then(() => {
+     this.$store.dispatch('auth/logout');
+      this.$router.push('/register');
+    
+    })
+    .catch((err) => console.log(err))
+  }},
+
   },
   created() {
-    console.log('1')
       axios({
       method: 'get',
       url: "http://localhost:3000/api/users/me",

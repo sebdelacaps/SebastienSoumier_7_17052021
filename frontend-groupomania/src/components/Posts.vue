@@ -3,7 +3,7 @@
 
    <div :key="post.id" v-for="post in postsContent"> 
 
-        <Post @delete-post="$emit('delete-post', post.id)" @like-post="$emit('like-post', post.id)" :post="post"/>  
+        <Post @delete-post="$emit('delete-post', post.id)" @like-post="$emit('like-post', post.id)" @select-post="$emit('select-post', post.UserId)" :post="post"/>  
   </div>
 
 </div>
@@ -20,7 +20,7 @@ props: {
 components: {
   Post
 },
-emits: ["delete-post", "like-post"],
+emits: ["delete-post", "like-post", "select-post"],
 }
 </script>
 
