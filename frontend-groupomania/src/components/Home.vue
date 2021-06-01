@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <header class="jumbotron">WELCOME</header>
+    <header class="jumbotron text-center h3">PARTAGER VOS PHOTOS AVEC VOS COLLEGUES</header>
     <Header @add-post="addPost" @add-file="addFile"/>
-    <Posts @delete-post="deletePost" @like-post="likePost" @select-post="selectPost" :posts-content="posts"/>
+    <Posts @delete-post="deletePost" @like-post="likePost" @dislike-post="dislikePost" @select-post="selectPost" :posts-content="posts"/>
    
 </div>
 
@@ -29,13 +29,12 @@ export default {
     addPost(postAdded) {
 
 
-// console.log(this.posts.attachment)
+
 
     const fd = new FormData();
     fd.append('image', this.posts.attachment, this.posts.attachment.name);
      fd.append('content', postAdded.content);
-    // console.log(Array.from(fd))
-
+  
    axios ({
      method: "post",
      url : 'http://localhost:3000/api/messages/new',
@@ -48,7 +47,7 @@ export default {
 UserService.getPublicContent().then(
       (response) => {
         this.posts = response.data
-        console.log(this.posts)
+     
        
       },
       (error) => {
@@ -92,7 +91,7 @@ return alert('Error deleting task')
   },
 
   likePost(id) {
-    console.log(this.$store.state.auth.user.token)
+    
   axios({
      method: 'post',
       url: `http://localhost:3000/api/messages/${id}/vote/like`,
@@ -103,7 +102,6 @@ return alert('Error deleting task')
 UserService.getPublicContent().then(
       (response) => {
         this.posts = response.data
-        console.log(this.posts)
        
       },
       (error) => {
@@ -118,14 +116,37 @@ UserService.getPublicContent().then(
     selectPost (id) {
      
      this.posts = this.posts.filter((post) => post.UserId == id)
-    }
-  
+    },
+  dislikePost(id) {
+   
+  axios({
+     method: 'post',
+      url: `http://localhost:3000/api/messages/${id}/vote/dislike`,
+      headers: { Authorization: this.$store.state.auth.user.token },
+      
+  }).then(() => {
+
+UserService.getPublicContent().then(
+      (response) => {
+        this.posts = response.data
+    
+       
+      },
+      (error) => {
+        this.content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    )})},
   },
   data() {
+    
     return {
       posts: []
-      
-    };
+          };
   
   },
   created() {
@@ -133,7 +154,7 @@ UserService.getPublicContent().then(
     UserService.getPublicContent().then(
       (response) => {
         this.posts = response.data
-        console.log(this.posts)
+      
        
       },
       (error) => {
@@ -150,3 +171,11 @@ UserService.getPublicContent().then(
 };
 
 </script>
+
+<style scoped>
+
+.jumbotron {
+  background-color: #fcd6d5;
+
+}
+</style>

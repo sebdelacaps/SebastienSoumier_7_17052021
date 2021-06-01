@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <header class="jumbotron">
+    <header class="jumbotron text-center">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{currentUser.username}}</strong> Modifier vos informations de connexion
       </h3>
     </header>
     
@@ -52,7 +52,6 @@ export default {
   name: 'Profile',
   computed: {
     currentUser() {
-      console.log(this.$store.state)
       return this.$store.state.auth.user;
     }
   },
@@ -83,7 +82,6 @@ export default {
       }
      })
    .then((response) => {
-     console.log(response.data.userUpdated.username)
        this.username = response.data.userUpdated.username
       this.email = response.data.userUpdated.email
     })
@@ -121,3 +119,11 @@ if (confirm('Are you sure you want to delete your profile ?')) {
   }
 };
 </script>
+
+<style scoped>
+
+.jumbotron {
+  background-color: #fcd6d5;
+
+}
+</style>

@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href="/" class="navbar-brand">Groupomania</a>
-      <div class="navbar-nav mr-auto">
+      <!-- <a href="/" class="navbar-brand">Groupomania</a> -->
+      <div> <img class="filter-logo" src="./assets/icon-left-font-monochrome-white.svg" alt=""> </div>
+      <div class="navbar-nav">
         <li class="nav-item">
           <router-link v-if="allUser" to="/home" class="nav-link">
             <font-awesome-icon icon="home" /> Home
@@ -17,8 +18,10 @@
         <li class="nav-item">
           <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
         </li> -->
+       
       </div>
-
+      
+        
       <div v-if="!currentUser" class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/register" class="nav-link">
@@ -91,3 +94,13 @@ export default {
   }
 };
 </script>
+
+<style >
+
+.filter-logo {
+
+filter: brightness(0) saturate(100%) invert(26%) sepia(73%) saturate(5644%) hue-rotate(2deg) brightness(101%) contrast(100%);
+width : 80%
+}
+
+</style>

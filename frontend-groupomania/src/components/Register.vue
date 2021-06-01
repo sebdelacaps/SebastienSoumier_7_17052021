@@ -132,6 +132,7 @@ label {
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
+    background-color: #fcd6d5;
 }
 .card {
   background-color: #f7f7f7;

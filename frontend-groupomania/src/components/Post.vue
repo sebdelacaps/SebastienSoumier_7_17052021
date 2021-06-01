@@ -4,19 +4,20 @@
 <div class="container mt-5 mb-5">
     <div class="row d-flex align-items-center justify-content-center">
         <div class="col-md-6">
-            <div class="card">
+            <div class="card card-color">
                 <div class="d-flex justify-content-between p-2 px-3">
                     <div class="d-flex flex-row align-items-center"> <img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle">
-                        <div class="d-flex flex-column ml-2"> <span @click="onSelect(post.UserId)" class="font-weight-bold">{{ post.User.username }}</span> </div>
+                        <div class="d-flex flex-column ml-2 cursor"> <span @click="onSelect(post.UserId)" class="font-weight-bold">{{ post.User.username }}</span> </div>
                     </div>
                     <div @click="onDelete(post.id)" class="d-flex flex-row mt-1 ellipsis">  <font-awesome-icon :icon="['fas', 'times']" />  </div>
                 </div> <img :src="post.attachment" class="img-fluid">
                 <div class="p-2">
                     <p class="text-justify">{{ post.content}}</p>
                     <hr>
-                    <div class="d-flex justify-content-center">
+                    <div class="icons d-flex justify-content-around">
                         <!-- <div class="d-flex flex-row icons d-flex align-items-center">   <font-awesome-icon :icon="['far', 'smile']" /> </div> -->
-                        <div class="icons"> <span>{{post.likes}} </span> <span @click="onLike(post.id)"><font-awesome-icon :icon="['fas', 'heart']" /> </span></div>
+                        <div class="cursor"> <span @click="onLike(post.id)" @dblclick="ondisLike(post.id)"> <font-awesome-icon :icon="['fas', 'thumbs-up']" /> </span> </div>
+                        <div>  <span>{{post.likes}} </span> <span><font-awesome-icon :icon="['fas', 'heart']" /> </span></div>
                     </div>
                    
                    
@@ -47,6 +48,9 @@ methods : {
     onLike(id) {
         this.$emit('like-post', id)
     },
+    ondisLike(id) {
+        this.$emit('dislike-post', id)
+    },
     onSelect(id) {
 
    this.$emit('select-post', id)
@@ -66,10 +70,13 @@ body {
     font-weight: 300
 }
 
-.card {
-    border: none
+.card-color {
+    border: none;
+    background-color: #fcd6d5!important;;
 }
-
+.cursor {
+    cursor: pointer
+}
 .ellipsis {
     color: #a09c9c
 }
@@ -146,6 +153,8 @@ hr {
     background-color: #fff;
     border-color: #8bbafe;
     outline: 0;
-    box-shadow: none
+    box-shadow: none   
 }
+
+
 </style>

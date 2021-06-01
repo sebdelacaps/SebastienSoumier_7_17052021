@@ -104,9 +104,8 @@ export default {
   methods: {
     addPost(e) {
       e.preventDefault()
-
-      if(!this.comment) {
-        return alert('Merci d\'ajouter un commentaire avant envoi')
+      if(!this.comment || this.selectedFile == null) {
+        return alert('Merci d\'ajouter un commentaire et une image avant envoi')
       }
       
       const newPost = {
