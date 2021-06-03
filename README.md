@@ -1,6 +1,6 @@
-###Creation of a corporate social network
+###Creation of a corporate social network###
 Getting started
-git clone git@github.com:marieparet/groupomania.git
+git clone 
 
 Frontend :
 cd frontend
