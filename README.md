@@ -15,13 +15,11 @@ git clone https://github.com/sebdelacaps/SebastienSoumier_7_17052021
 * npm start
 
 ## Database :
-Make sure you have MySQL installed globally
+ 1/ Make sure you have MySQL installed globally
 
-* cd backend
+2/ You'll need to verify that the username and password in the config database.json file (backend-Groupomania/config/config.json), match your local MySQL credentials.
 
-You'll need to verify that the username and password in the config database.json file (backend-Groupomania/config/config.json), match your local MySQL credentials.
-
-sequelize db:create (Create database specified by configuration)
-sequelize db:migrate (Run pending migrations)
+* sequelize db:create (Create database specified by configuration)
+* sequelize db:migrate (Run pending migrations)
 
 Then open on any web browser : http://localhost:8080/
